@@ -1,4 +1,4 @@
-# Hornbill Contact Registration Processor [GO](https://golang.org/) - Script to process registered contacts in Hornbill
+# Hornbill Contact Registration Processor [GO](https://golang.org/) - Utility to process registered contacts in Hornbill
 
 ## Quick links
 
@@ -37,7 +37,7 @@ The utility can be downloaded from [GitHub](https://github.com/hornbill/process-
 
 - Download the archive containing the import executables
 - Extract zip into a folder you would like the application to run from e.g. `C:\hornbill_contact_processing\`
-- Open '''conf.json''' and add in the necessary configuration
+- Open **conf.json** and add in the necessary configuration
 - Open Command Line Prompt as Administrator
 - Change Directory to the folder containing the extracted files `C:\hornbill_contact_processing\`
 - Run the command relevant to the computer you are running this on:
@@ -58,7 +58,7 @@ The program that performs the import is fairly lightweight and doesn’t require
 
 The utility connects to the Hornbill instance in the cloud over HTTPS/SSL, so as long as you have standard internet access then you should be able to use it without the need to make any proxy or firewall configuration changes.
 
-####HTTP Proxies
+#### HTTP Proxies
 
 If you use a proxy for your internet traffic, the HTTP_PROXY and HTTPS_PROXY environment variables will need to be set. These environment variables hold the hostname or IP address of your proxy server. The proxy environment variables can be set from a command line as so:
 ```
@@ -77,7 +77,7 @@ set HTTPS_PROXY=username:password@HOST:PORT
 
 Occasionally, on top of setting the HTTP_PROXY and HTTPS_PROXY variables, the following URLs may need to be white-listed to allow access out from your network to the required endpoints in the Hornbill network:
 
-- https://*.hornbill.com/* - allows access to the required Hornbill instance information and API endpoints
+- https://\*.hornbill.com/\* - allows access to the required Hornbill instance information and API endpoints
 - https://api.github.com/repos/hornbill/* - allows the utility to self-update
 
 ## Authentication
@@ -127,13 +127,13 @@ Example JSON File:
 
 ### Domain Black List
 
-`DomainBlackList` is an array of strings, listing any **blacklisted** domains.
-Registered contacts with email addresses from these domains will be **deleted**.
+`DomainBlackList` - array of strings - listing any **blacklisted** domains.
+  Registered contacts with email addresses from these domains will be **deleted**.
 
 ### Domain White List
 
-`DomainWhiteList` is an array of strings, listing any **whitelisted** domains.
-Registered contacts with email addresses from these domains will automatically be **approved** with their email address set as their login id and taking on the setting of MFA as determined in the configuration file.
+`DomainWhiteList` - array of strings - listing any **whitelisted** domains.
+  Registered contacts with email addresses from these domains will automatically be **approved** with their email address set as their login id and taking on the setting of MFA as determined in the configuration file.
 
 ### Multi Factor Authentication
 
@@ -145,9 +145,9 @@ Registered contacts with email addresses from these domains will automatically b
 
 ### Summary Auto Task
 
-`Summary Auto Task` - **string** - The name of the ( *servicemanager* ) **Global** AutoTask to be triggered.
+`SummaryAutoTask` - **string** - The name of the ( *servicemanager* ) **Global** AutoTask to be triggered.
 
-The AutoTask will need the following Inputs:
+  The AutoTask will need the following Inputs:
 
 - `dryrun` - **boolean** - whether the utility is run in dryrun mode. One would probably want to put some logic in the AutoTask to ignore dryruns.
 - `errorCount` - **integer** - amount of errors which occurred during the running of the utility.
