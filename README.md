@@ -3,18 +3,19 @@
 ## Quick links
 
 - [Overview](#overview)
-- [Installation](#Installation)
-- [Requirements](#Requirements)
-- [Authentication](#Authentication)
-- [Configuration](#Configuration)
+- [Installation](#onstallation)
+- [Requirements](#requirements)
+- [Authentication](#authentication)
+- [Configuration](#configuration)
   - [Domain Black List](#domain-black-list)
   - [Domain White List](#domain-white-list)
   - [Multi Factor Authentication](#multi-factor-authentication)
   - [Summary Auto Task](#summary-auto-task)
 - [Execute](#execute)
-- [Testing](#testing)
-- [Logging](#logging)
-- [Error Codes](#error codes)
+  - [Command Line Parameters](#command-line-parameters)
+  - [Testing](#testing)
+  - [Logging](#logging)
+  - [Error Codes](#error-codes)
 
 ## Overview
 
@@ -81,8 +82,25 @@ Occasionally, on top of setting the HTTP_PROXY and HTTPS_PROXY variables, the fo
 
 ## Authentication
 
+The Contact Registration Processor Utility uses API Keys to authenticate all API calls into Hornbill instances.
+
+### User
+
+Every action within Hornbill must be performed in the context of a user account. The user account must possess roles for the platform and applications that you are granting access to via the import utility. The above comment about roles refers to the Hornbill Security Model when associating roles with user accounts. This security measure prevents you from inflating your session rights or granting a user more rights than you have yourself.
+
+> **Important**
+> We strongly recommend that you create a Service Account in your Hornbill instance, and API Keys against that account which can then be used to perform the required API calls back into Hornbill.
+> Please read the API Key documentation and best practice guide before creating API keys against your user records.
+> The service account that you create must be of type User (not Basic), and be granted the following roles:
+>    Contact Admin - Allows the utility to update and remove Contact records.
+
 
 ### API Key Rules
+
+For the utility to read, create and update records via the Hornbill API, it requires an API Key to be securely stored alongside the client.
+
+The Contact Registration Processor requires access to the following Hornbill Platform and application APIs, and your API Key rules should reflect those, plus additional security hardening in the form of IP rules:
+
 ```
 admin:contactDelete
 admin:portalAccountGetContacts
@@ -92,6 +110,7 @@ data:entityUpdateRecord
 system:logMessage
 ```
 
+> `bpm:autoTaskRun` is only required if you use the `SummaryAutoTask` functionality.
 
 ## Configuration
 
@@ -111,12 +130,12 @@ Example JSON File:
 `DomainBlackList` is an array of strings, listing any **blacklisted** domains.
 Registered contacts with email addresses from these domains will be **deleted**.
 
-#### Domain White List
+### Domain White List
 
 `DomainWhiteList` is an array of strings, listing any **whitelisted** domains.
 Registered contacts with email addresses from these domains will automatically be **approved** with their email address set as their login id and taking on the setting of MFA as determined in the configuration file.
 
-#### Multi Factor Authentication
+### Multi Factor Authentication
 
 `MFA` - What form of Authentication the registered contact should use.
 
@@ -124,8 +143,7 @@ Registered contacts with email addresses from these domains will automatically b
 - 1: Email
 - 2: Authentication App
 
-
-#### Summary Auto Task
+### Summary Auto Task
 
 `Summary Auto Task` - **string** - The name of the ( *servicemanager* ) **Global** AutoTask to be triggered.
 
@@ -158,7 +176,7 @@ If you run the application with the argument dryrun=true then no requests will b
 
 ### Logging
 
-All Logging output is saved in the log directory in the same directory as the executable the file name contains the date and time the import was run 'SW_Call_Import_2015-11-06T14-26-13Z.log'
+All Logging output is saved in the log directory in the same directory as the executable the file name contains the date and time the import was run 'Contact Registration Processor 2025-08-07T16-03-47+01-00.log'
 
 ### Error Codes
 
